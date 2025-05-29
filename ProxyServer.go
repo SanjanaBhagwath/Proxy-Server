@@ -14,7 +14,7 @@ type proxyHandler struct{}
 
 func isSafeToBrowse(url string) bool {
 	ctx := context.Background()
-	apiKey := "AIzaSyCLZVrO9jCsnhuQv2PTEL5J-0GoqTLWOBc"
+	apiKey := ""
 
 	// Create Safe Browsing service
 	safeBrowsingService, err := safebrowsing.NewService(ctx, option.WithAPIKey(apiKey))
