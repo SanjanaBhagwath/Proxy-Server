@@ -1,0 +1,17 @@
+# Use Golang base image
+FROM golang:latest
+
+# Set the working directory inside the container
+WORKDIR /app
+
+# Copy all files into the container
+COPY TargetServer.go /app/
+
+# Build the target server binary
+RUN go build -o targetServer TargetServer.go
+
+# Expose the required port for the target server
+EXPOSE 8080
+
+# Run the target server
+CMD ["./targetServer"]
