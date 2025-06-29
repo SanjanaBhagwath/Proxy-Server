@@ -36,7 +36,6 @@ Build and run Client.go
 go build Client.go
 go run Client.go
 ```
----
 
 ### 2. Building & Running the Proxy and Target Server
 
