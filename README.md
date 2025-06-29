@@ -77,5 +77,9 @@ docker run -d --name MaliciousBlocker -p 8080:8080 maliciousblocker
 ```
 To test the malicious blocking feature, on the client terminal, enter the URL: http://testsafebrowsing.appspot.com/s/malware.html
 
+---
 
-
+Conclusion
+This project demonstrates the implementation of a custom HTTP proxy server in Go, enhanced with Google Safe Browsing integration to detect and block malicious URLs in real time. By intercepting client requests, validating target destinations, and conditionally forwarding or rejecting traffic, the proxy acts as a lightweight security layer for HTTP-based communication.
+Through this project, key concepts such as HTTP request handling, proxy-aware client configuration, Safe Browsing API usage, and containerized deployment with Docker were explored and applied. The result is a modular, testable, and extensible proxy system that lays the groundwork for more advanced features like HTTPS support, rate limiting, and traffic analytics.
+This proxy serves as both a practical tool and a learning platform for backend development, network security, and system design.
