@@ -3,75 +3,41 @@ package main
 import (
 	"context"
 	"fmt"
-	"google.golang.org/api/option"
-	"google.golang.org/api/safebrowsing/v4"
 	"io"
 	"log"
 	"net/http"
+	"net/url"
 )
 
 type proxyHandler struct{}
 
-func isSafeToBrowse(url string) bool {
-	ctx := context.Background()
-	apiKey := ""
-
-	// Create Safe Browsing service
-	safeBrowsingService, err := safebrowsing.NewService(ctx, option.WithAPIKey(apiKey))
-	if err != nil {
-		fmt.Println("SafeBrowsing Client Creation error:", err)
-		return false
-	}
-
-	// Prepare request body
-	req := &safebrowsing.GoogleSecuritySafebrowsingV4FindThreatMatchesRequest{
-		ThreatInfo: &safebrowsing.GoogleSecuritySafebrowsingV4ThreatInfo{
-			ThreatTypes:      []string{"MALWARE", "SOCIAL_ENGINEERING"},
-			PlatformTypes:    []string{"ANY_PLATFORM"},
-			ThreatEntryTypes: []string{"URL"},
-			ThreatEntries:    []*safebrowsing.GoogleSecuritySafebrowsingV4ThreatEntry{{"", "", url, nil, nil}},
-		},
-	}
-
-	// Send request
-	resp, err := safeBrowsingService.ThreatMatches.Find(req).Do()
-	if err != nil {
-		fmt.Println("Blacklist lookup error:", err)
-		return false
-	}
-
-	// Check if any threats were found
-	if len(resp.Matches) > 0 {
-		return false // URL is unsafe
-	}
-
-	return true // URL is safe
-}
-
 func (ph *proxyHandler) ServeHTTP(w http.ResponseWriter, requestReceived *http.Request) {
 
 	fmt.Println("Request has been intercepted by the proxy server")
-	fmt.Println("Final host from the request received: ", requestReceived.URL.String)
+	fmt.Println("Final host from the request received: ", requestReceived.URL.String())
 
-	hostHeader := requestReceived.Header.Get("Host")
-	targetURL := "http://" + hostHeader + requestReceived.URL.Path
+	hostHeader := requestReceived.Host
+
+	target := &url.URL{
+		Scheme:   "http",
+		Host:     hostHeader,
+		Path:     requestReceived.URL.Path,
+		RawQuery: requestReceived.URL.RawQuery,
+	}
+
+	targetURL := target.String()
 
 	fmt.Println("Final target URL: ", targetURL)
 	fmt.Println("Request received is: ", requestReceived)
 	// Print IP address of the client from which request is received
 	fmt.Println("Request is received from the IP: ", requestReceived.RemoteAddr)
 
-	urlSafe := isSafeToBrowse(targetURL)
-
-	if urlSafe == false {
-		fmt.Println("URL is unsafe. Request blocked")
-		return
-	}
-
 	proxyRequest, err1 := http.NewRequestWithContext(context.TODO(), "GET", targetURL, nil)
 	if err1 != nil {
 		log.Fatalf("Error in creating the request to be forwarded: %v", err1)
 	}
+
+	proxyRequest.Host = hostHeader
 
 	response, err2 := new(http.Client).Do(proxyRequest)
 	if err2 != nil {
