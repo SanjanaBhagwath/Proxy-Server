@@ -57,7 +57,7 @@ Build and run the rate limiter container:
 ```bash
 cd rateLimitedUtil
 docker build -t ratelimiter .
-docker run -d --name RateLimiter -p 8080:8080 ratelimiter
+docker run --name RateLimiter -p 8080:8080 ratelimiter
 ```
 To test the rate limiting feature, on the client terminal, test with:
 
@@ -72,7 +72,7 @@ Build and run the malicious URL blocker container:
 ```bash
 cd safeBrowseUtil
 docker build -t maliciousblocker .
-docker run -d --name MaliciousBlocker -p 8080:8080 maliciousblocker
+docker run --name MaliciousBlocker -p 8080:8080 maliciousblocker
 ```
 To test the malicious blocking feature, on the client terminal, enter the URL: http://testsafebrowsing.appspot.com/s/malware.html
 
