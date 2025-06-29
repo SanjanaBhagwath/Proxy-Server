@@ -24,7 +24,7 @@ The system is composed of four Docker containers, each representing a distinct c
 | `rate-limiter`      | Middleware proxy that limits requests per client IP                 |
 | `malicious-blocker` | Middleware proxy that blocks requests to malicious URLs using the Google Safe Browsing API |
 
-All containers are connected within the same Docker network to simulate realistic routing and isolation.
+The project was built in increments with each increment implementing an additional feature.
 
 ## Running the Project
 
