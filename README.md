@@ -24,7 +24,7 @@ The system is composed of four Docker containers, each representing a distinct c
 | `rate-limiter`      | Middleware proxy that limits requests per client IP                 |
 | `malicious-blocker` | Middleware proxy that blocks requests to malicious URLs using the Google Safe Browsing API |
 
-The project was built in increments with each increment implementing an additional feature.
+The project is built in increments with each increment implementing an additional feature.
 
 ## Running the Project
 
@@ -39,11 +39,11 @@ go run Client.go
 
 ### 2. Building & Running the Proxy and Target Server
 
-Ensure Docker is installed and running. Then build and run the containers on separate terminals
+Ensure Docker is installed and running. Then build and run the containers on separate terminals.
 
 ```bash
-docker build -t proxy-server .
-docker build -t target-server .
+docker build -t proxyserver .
+docker build -t targetserver .
 
 docker run --name TargetServer --network proxy-network -p 8080:8080 targetserver
 docker run --name ProxyServer --network proxy-network -p 9090:9090 proxyserver
