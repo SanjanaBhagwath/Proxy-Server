@@ -43,7 +43,7 @@ Ensure Docker is installed and running. Then build and run the containers on sep
 
 ```bash
 docker build -t proxyserver .
-docker build -t targetserver .
+docker build -f Dockerfile.target -t targetserver .
 
 docker run --name TargetServer --network proxy-network -p 8080:8080 targetserver
 docker run --name ProxyServer --network proxy-network -p 9090:9090 proxyserver
