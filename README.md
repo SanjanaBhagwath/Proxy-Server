@@ -72,7 +72,7 @@ Build and run the malicious URL blocker container:
 ```bash
 cd safeBrowseUtil
 docker build -t maliciousblocker .
-docker run --name MaliciousBlocker -p 8080:8080 maliciousblocker
+docker run --name MaliciousBlocker -p 9090:9090 maliciousblocker
 ```
 To test the malicious blocking feature, on the client terminal, enter the URL: http://testsafebrowsing.appspot.com/s/malware.html
 
