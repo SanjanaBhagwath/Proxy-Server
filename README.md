@@ -57,7 +57,7 @@ Build and run the rate limiter container:
 ```bash
 cd rateLimitedUtil
 docker build -t ratelimiter .
-docker run --name RateLimiter -p 8080:8080 ratelimiter
+docker run --name RateLimiter -p 9090:9090 ratelimiter
 ```
 To test the rate limiting feature, on the client terminal, test with:
 
