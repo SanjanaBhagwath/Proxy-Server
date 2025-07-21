@@ -62,7 +62,7 @@ docker run --name RateLimiter -p 9090:9090 ratelimiter
 To test the rate limiting feature, on the client terminal, test with:
 
 ```bash
-for ($i=1; $i -le 7; $i++) { echo "http://google.com" | go run Client.go ; Start-Sleep -Milliseconds 100 }
+for ($i=1; $i -le 7; $i++) {powershell -Command "Write-Output 'www.google.com' | go run Client.go"; Start-Sleep -Milliseconds 100}
 ```
 
 ### 4. Running the Malicious Blocking Proxy
